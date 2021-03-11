@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './App.css';
+import applyInc from '../../actions';
 import FrameWork from '../frameWorks';
 
 const App = () => {
@@ -8,22 +9,22 @@ const App = () => {
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState(0);
 
-  const value = useSelector(state => state);
+  const frameWorks = useSelector(state => state.items);
+  const frameWorksName = useSelector(state => state.itemsName);
+  const totalSum = useSelector(state => state.total);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const items = [];    
-    let total = 0;
-    for (let key in value) {
-      items.push({ name: key, count: value[key] });
-      total+=value[key];
+    const items = [];
+    for (let name of frameWorksName) {
+      items.push({ name: name, count: frameWorks[name]});
     }
     setItems(items);
-    setTotal(total)
-  }, [value])
+    setTotal(totalSum)
+  }, [frameWorks, totalSum])
 
   const useInc = (field) => {
-    dispatch({type: 'INC', payload: field})
+    dispatch(applyInc(field))
   };
 
   const renderListItems = () => items.map((item) => (
