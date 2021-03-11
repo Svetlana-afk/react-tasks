@@ -21,16 +21,16 @@ const App = () => {
     }
     setItems(items);
     setTotal(totalSum)
-  }, [frameWorks, totalSum])
+  }, [frameWorks, frameWorksName, totalSum])
 
-  const useInc = (field) => {
+  const handleIncrement = (field) => {
     dispatch(applyInc(field))
   };
 
   const renderListItems = () => items.map((item) => (
     <FrameWork
       key={item.name}
-      onClick={useInc}
+      onClick={handleIncrement}
       name={item.name}
       count={item.count} />
   ));
