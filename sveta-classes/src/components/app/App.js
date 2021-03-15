@@ -1,34 +1,58 @@
-import React, {Fragment}from 'react';
+import React, { Fragment } from 'react';
 import './App.css';
 import FrameWork from '../frameWorks';
 
 class App extends React.Component {
-  state = {
-    items: [{ name: "Angular", count: 0 }, { name: "React", count: 0 }, { name: "Vue", count: 0 }],
-    total: 0
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: {},
+      total: 0
+    };
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    let total = 0;
+    let result = state.items;
+    let changed = false;
+
+    props.value.map((item) => {
+      let id = item.name;
+      if (!result[id]) {
+        result[id] = item;
+        changed = true;
+      }
+    });
+
+    Object.values(result).map((item) => {
+      total += item.count;
+    });
+
+    if (state.total != total) changed = true;
+
+    if (changed)
+      return { items: result, total: total };
+    else
+      return null;
   }
 
   inc = (field) => {
+    let tmp = this.state.items;
+    tmp[field].count++;
+
     this.setState((state) => {
       return {
-        items: (state.items.map((item) => {
-          if (item.name === field) {
-            return { ...item, count: item.count + 1 }
-          } else
-            return item;
-        })
-        ),
-        total: state.total + 1
+        items: tmp
       }
     })
   }
 
-  renderListItems = () => this.state.items.map((item) =>
+  renderListItems = () => Object.keys(this.state.items).map((key) =>
   (<FrameWork
-    key={item.name}
+    key={key}
     onClick={this.inc}
-    name={item.name}
-    count={item.count} />)
+    name={this.state.items[key].name}
+    count={this.state.items[key].count} />)
   );
 
   render() {
