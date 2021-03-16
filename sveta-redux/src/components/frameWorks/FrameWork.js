@@ -1,9 +1,9 @@
 import React from 'react';
 import './FrameWork.css'
 
-const FrameWork = ({onClick, name, count}) => {
+const FrameWork = ({onClick, name, count, id}) => {
     return (
-       <div className="fw" onClick={()=>onClick(name)}>{name}: {count} </div>
+       <div className="fw" onClick={()=>onClick(id)}>{name}: {count} </div>
     )
   }
 

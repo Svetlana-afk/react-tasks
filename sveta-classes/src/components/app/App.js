@@ -16,7 +16,7 @@ class App extends React.Component {
     let result = state.items;
     let changed = false;
 
-    props.value.map((item) => {
+    props.value.forEach((item) => {
       let id = item.name;
       if (!result[id]) {
         result[id] = item;
@@ -28,7 +28,7 @@ class App extends React.Component {
       total += item.count;
     });
 
-    if (state.total != total) changed = true;
+    if (state.total !== total) changed = true;
 
     if (changed)
       return { items: result, total: total };

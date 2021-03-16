@@ -1,8 +1,8 @@
-export const applyInc = name => {
+export const applyInc = id => {
     return (
         {
             type: 'INC',
-            payload: name
+            payload: id
         }
         )
 }
